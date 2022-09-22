@@ -27,7 +27,7 @@ Wait::Result Wait::exec()
         return InvalidArgument;
     }
 
-    // Sleep now
+    // Wait now
     if (sleep(sec) != 0)
     {
         ERROR("failed to sleep: " << strerror(errno));
