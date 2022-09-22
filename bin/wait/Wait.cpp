@@ -23,14 +23,14 @@ Wait::Result Wait::exec()
     // Convert input to seconds
     if ((sec = atoi(arguments().get("SECONDS"))) <= 0)
     {
-        ERROR("invalid sleep time `" << arguments().get("SECONDS") << "'");
+        ERROR("invalid wait time `" << arguments().get("SECONDS") << "'");
         return InvalidArgument;
     }
 
     // Wait now
     if (sleep(sec) != 0)
     {
-        ERROR("failed to sleep: " << strerror(errno));
+        ERROR("failed to wait: " << strerror(errno));
         return IOError;
     }
 
