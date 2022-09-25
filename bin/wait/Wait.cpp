@@ -3,13 +3,14 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include "sys/wait.h"
 #include "Wait.h"
 
 Wait::Wait(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
     parser().setDescription("Wait for process to change state");
-    parser().registerPositional("SECONDS", "Wait for process to change state after given number of seconds");
+    parser().registerPositional("PID", "Wait for process to change state after given process ID");
 }
 
 Wait::~Wait()
@@ -18,17 +19,11 @@ Wait::~Wait()
 
 Wait::Result Wait::exec()
 {
-    int sec = 0;
-
-    // Convert input to seconds
-    if ((sec = atoi(arguments().get("SECONDS"))) <= 0)
-    {
-        ERROR("invalid wait time `" << arguments().get("SECONDS") << "'");
-        return InvalidArgument;
-    }
+    pid_t pid = atoi(arguments().get("PID"));
+    int status;
 
     // Wait now
-    if (sleep(sec) != 0)
+    if (waitpid(pid, &status, 0) != pid)
     {
         ERROR("failed to wait: " << strerror(errno));
         return IOError;
