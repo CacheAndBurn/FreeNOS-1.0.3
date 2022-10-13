@@ -18,47 +18,60 @@
 #include <Types.h>
 #include <Macros.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
-#include <Renice.h>
-#include "Renice.h"
 #include <ProcessClient.h>
-#include "ProcessList.h"
+// #include "ProcessList.h"
+#include "Renice.h"
 
 Renice::Renice(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
     parser().setDescription("Alter the priority of running processes");
+    parser().registerPositional("PRIORITY", "priority value to be used to alter scheduling");
+    parser().registerPositional("PROCESS", "process ID to run at new scheduled priority");
+    parser().registerFlag('n', "nice", "Schedule process with specified priority");
 }
 
 Renice::Result Renice::exec()
 {
-    const ProcessClient process;
-    String out;
+    u8 priority;
+    int process;
 
-    // Print header
-    out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
-
-    // Loop processes
-    for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
-    {
-        ProcessClient::Info info;
-
-        const ProcessClient::Result result = process.processInfo(pid, info);
-        if (result == ProcessClient::Success)
-        {
-            DEBUG("PID " << pid << " state = " << *info.textState);
-
-            // Output a line
-            char line[128];
-            snprintf(line, sizeof(line),
-                    "%3d %7d %4d %5d %10s %32s\r\n",
-                     pid, info.kernelState.parent,
-                     0, 0, *info.textState, *info.command);
-            out << line;
-        }
+    if (arguments().get("num-priority")) {
+        priority = atoi(arguments().get("PRIORITY"));
+        process = atoi(arguments().get("PROCESS"));
+        printf("%d\n", priority);
+        printf("%d\n\n", process);
     }
+    
+    // const ProcessClient process;
+    // String out;
 
-    // Output the table
-    write(1, *out, out.length());
+    // // Print header
+    // out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
+
+    // // Loop processes
+    // for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
+    // {
+    //     ProcessClient::Info info;
+
+    //     const ProcessClient::Result result = process.processInfo(pid, info);
+    //     if (result == ProcessClient::Success)
+    //     {
+    //         DEBUG("PID " << pid << " state = " << *info.textState);
+
+    //         // Output a line
+    //         char line[128];
+    //         snprintf(line, sizeof(line),
+    //                 "%3d %7d %4d %5d %10s %32s\r\n",
+    //                  pid, info.kernelState.parent,
+    //                  0, 0, *info.textState, *info.command);
+    //         out << line;
+    //     }
+    // }
+
+    // // Output the table
+    // write(1, *out, out.length());
     return Success;
 }
