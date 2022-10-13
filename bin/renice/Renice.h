@@ -26,7 +26,7 @@
  */
 
 /**
- * Output the system process list.
+ * Alter the priority of running processes.
  */
 class Renice : public POSIXApplication
 {

@@ -27,7 +27,7 @@
 Renice::Renice(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
-    parser().setDescription("Output system process list");
+    parser().setDescription("Alter the priority of running processes");
 }
 
 Renice::Result Renice::exec()
