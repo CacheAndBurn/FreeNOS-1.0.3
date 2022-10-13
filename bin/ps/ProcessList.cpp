@@ -26,15 +26,21 @@ ProcessList::ProcessList(int argc, char **argv)
     : POSIXApplication(argc, argv)
 {
     parser().setDescription("Output system process list");
+    parser().registerFlag('l', "level", "Display priority level of process(es)");
 }
 
 ProcessList::Result ProcessList::exec()
 {
     const ProcessClient process;
     String out;
+    u8 default_level = 3;
 
+    // user enters "ps -l"
+    if (arguments().get("level"))
+        out << "ID  PARENT  USER GROUP PRIORITY STATUS     CMD\r\n";
     // Print header
-    out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
+    else
+        out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
 
     // Loop processes
     for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
@@ -48,10 +54,20 @@ ProcessList::Result ProcessList::exec()
 
             // Output a line
             char line[128];
-            snprintf(line, sizeof(line),
+            if (arguments().get("level"))
+            {
+                snprintf(line, sizeof(line),
+                    "%3d %7d %4d %5d %8d %10s %32s\r\n",
+                     pid, info.kernelState.parent,
+                     0, 0, default_level, *info.textState, *info.command);
+            }
+            else
+            {
+                snprintf(line, sizeof(line),
                     "%3d %7d %4d %5d %10s %32s\r\n",
                      pid, info.kernelState.parent,
                      0, 0, *info.textState, *info.command);
+            }
             out << line;
         }
     }
