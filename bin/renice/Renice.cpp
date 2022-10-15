@@ -38,40 +38,38 @@ Renice::Result Renice::exec()
     u8 priority;
     int process;
 
-    if (arguments().get("num-priority")) {
+    if (arguments().get("nice")) {
         priority = atoi(arguments().get("PRIORITY"));
         process = atoi(arguments().get("PROCESS"));
-        printf("%d\n", priority);
-        printf("%d\n\n", process);
     }
     
-    // const ProcessClient process;
-    // String out;
+    const ProcessClient process;
+    String out;
 
-    // // Print header
-    // out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
+    // Print header
+    out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
 
-    // // Loop processes
-    // for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
-    // {
-    //     ProcessClient::Info info;
+    // Loop processes
+    for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
+    {
+        ProcessClient::Info info;
 
-    //     const ProcessClient::Result result = process.processInfo(pid, info);
-    //     if (result == ProcessClient::Success)
-    //     {
-    //         DEBUG("PID " << pid << " state = " << *info.textState);
+        const ProcessClient::Result result = process.processInfo(pid, info);
+        if (result == ProcessClient::Success)
+        {
+            DEBUG("PID " << pid << " state = " << *info.textState);
 
-    //         // Output a line
-    //         char line[128];
-    //         snprintf(line, sizeof(line),
-    //                 "%3d %7d %4d %5d %10s %32s\r\n",
-    //                  pid, info.kernelState.parent,
-    //                  0, 0, *info.textState, *info.command);
-    //         out << line;
-    //     }
-    // }
+            // Output a line
+            char line[128];
+            snprintf(line, sizeof(line),
+                    "%3d %7d %4d %5d %10s %32s\r\n",
+                     pid, info.kernelState.parent,
+                     0, 0, *info.textState, *info.command);
+            out << line;
+        }
+    }
 
-    // // Output the table
-    // write(1, *out, out.length());
+    // Output the table
+    write(1, *out, out.length());
     return Success;
 }
