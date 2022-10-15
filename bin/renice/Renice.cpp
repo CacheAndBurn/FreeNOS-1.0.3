@@ -36,7 +36,7 @@ Renice::Renice(int argc, char **argv)
 Renice::Result Renice::exec()
 {
     u8 priority;
-    int PID;
+    unsigned int PID;
 
     if (arguments().get("nice")) {
         priority = atoi(arguments().get("PRIORITY"));
@@ -47,7 +47,7 @@ Renice::Result Renice::exec()
     String out;
 
     // Print header
-    out << "ID  PARENT  USER GROUP STATUS     CMD\r\n";
+    out << "ID  PARENT  USER GROUP PPRIORITY STATUS     CMD\r\n";
 
     // Loop processes
     for (ProcessID pid = 0; pid < ProcessClient::MaximumProcesses; pid++)
@@ -55,16 +55,20 @@ Renice::Result Renice::exec()
         ProcessClient::Info info;
 
         const ProcessClient::Result result = process.processInfo(pid, info);
+
+        if (pid == PID) {
+            info.priorityLevel = priority;
+        }
         if (result == ProcessClient::Success)
-        {
+        {   
             DEBUG("PID " << pid << " state = " << *info.textState);
 
             // Output a line
             char line[128];
             snprintf(line, sizeof(line),
-                    "%3d %7d %4d %5d %10s %32s\r\n",
+                    "%3d %7d %4d %5d %8d %10s %32s\r\n",
                      pid, info.kernelState.parent,
-                     0, 0, *info.textState, *info.command);
+                     0, 0, info.priorityLevel, *info.textState, *info.command);
             out << line;
         }
     }
