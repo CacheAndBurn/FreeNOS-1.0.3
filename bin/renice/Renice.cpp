@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <ProcessClient.h>
-// #include "ProcessList.h"
+#include <../bin/ps/ProcessList.h>
 #include "Renice.h"
 
 Renice::Renice(int argc, char **argv)
@@ -36,11 +36,11 @@ Renice::Renice(int argc, char **argv)
 Renice::Result Renice::exec()
 {
     u8 priority;
-    int process;
+    int PID;
 
     if (arguments().get("nice")) {
         priority = atoi(arguments().get("PRIORITY"));
-        process = atoi(arguments().get("PROCESS"));
+        PID = atoi(arguments().get("PROCESS"));
     }
     
     const ProcessClient process;
