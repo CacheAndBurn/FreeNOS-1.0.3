@@ -33,7 +33,6 @@ ProcessList::Result ProcessList::exec()
 {
     const ProcessClient process;
     String out;
-    u8 default_level = 3;
 
     // user enters "ps -l"
     if (arguments().get("level"))
@@ -59,7 +58,7 @@ ProcessList::Result ProcessList::exec()
                 snprintf(line, sizeof(line),
                     "%3d %7d %4d %5d %8d %10s %32s\r\n",
                      pid, info.kernelState.parent,
-                     0, 0, default_level, *info.textState, *info.command);
+                     0, 0, info.priorityLevel, *info.textState, *info.command);
             }
             else
             {
