@@ -24,6 +24,22 @@
 #include <Log.h>
 #include "ProcessCtl.h"
 
+void setPriorityLevel(const ProcessID procID, u8 priorityLevel)
+{
+    Process *proc = ZERO;
+    ProcessManager *procs = Kernel::instance()->getProcessManager();
+    proc = procs->get(procID);
+    proc->setPriorityLevel(priorityLevel);
+}
+
+u8 getPriorityLevel(const ProcessID procID)
+{
+    Process *proc = ZERO;
+    ProcessManager *procs = Kernel::instance()->getProcessManager();
+    proc = procs->get(procID);
+    return proc->getPriorityLevel();
+}
+
 API::Result ProcessCtlHandler(const ProcessID procID,
                               const ProcessOperation action,
                               const Address addr,

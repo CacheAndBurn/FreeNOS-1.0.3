@@ -68,7 +68,7 @@ ProcessClient::Result ProcessClient::processInfo(const ProcessID pid,
     // Fill output
     info.command = cmd;
     info.textState = (pid == m_pid ? "Running" : textStates[info.kernelState.state]);
-    // info.priorityLevel = 3;
+    info.priorityLevel = getPriorityLevel(pid);
 #endif /* __HOST__ */
 
     return Success;
@@ -103,4 +103,9 @@ ProcessID ProcessClient::findProcess(const String program) const
     {
         return ANY;
     }
+}
+
+void ProcessClient::changePriorityLevel(const ProcessID pid, u8 priority)
+{
+    setPriorityLevel(pid, priority);
 }

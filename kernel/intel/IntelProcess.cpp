@@ -22,8 +22,8 @@
 #include <intel/IntelPaging.h>
 #include "IntelProcess.h"
 
-IntelProcess::IntelProcess(ProcessID id, Address entry, bool privileged, const MemoryMap &map)
-    : Process(id, entry, privileged, map)
+IntelProcess::IntelProcess(ProcessID id, Address entry, bool privileged, const MemoryMap &map, u8 priority)
+    : Process(id, entry, privileged, map, priority)
 {
 }
 

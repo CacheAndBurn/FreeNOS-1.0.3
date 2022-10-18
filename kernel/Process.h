@@ -80,8 +80,9 @@ class Process
      * @param entry Initial program counter value.
      * @param privileged If true, the process has unlimited access to hardware.
      * @param map Memory map to use
+     * @param priority Priority level of the process.
      */
-    Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map);
+    Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map, u8 priority);
 
     /**
      * Destructor function.
@@ -148,6 +149,10 @@ class Process
      * @return True if equal, false otherwise.
      */
     bool operator == (Process *proc);
+
+    u8 getPriorityLevel() const;
+
+    void setPriorityLevel(u8 priority);
 
   protected:
 
@@ -272,6 +277,9 @@ class Process
 
     /** Number of wakeups received */
     Size m_wakeups;
+
+    /** Priority level of this Process */
+    u8 m_priorityLevel;
 
     /**
      * Sleep timer value.

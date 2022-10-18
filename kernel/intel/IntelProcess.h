@@ -51,8 +51,9 @@ class IntelProcess : public Process
      * @param entry Initial EIP register value.
      * @param privileged If true, the Process has unlimited access to hardware.
      * @param map Virtual memory layout.
+     * @param priority Priority level of the Process.
      */
-    IntelProcess(ProcessID id, Address entry, bool privileged, const MemoryMap &map);
+    IntelProcess(ProcessID id, Address entry, bool privileged, const MemoryMap &map, u8 priority);
 
     /**
      * Destructor function.

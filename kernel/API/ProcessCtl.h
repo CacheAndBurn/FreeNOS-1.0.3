@@ -98,6 +98,22 @@ inline API::Result ProcessCtl(const ProcessID proc,
     return (API::Result) trapKernel4(API::ProcessCtlNumber, proc, op, addr, output);
 }
 
+void setPriorityLevel(const ProcessID procID, u8 priorityLevel);
+
+u8 getPriorityLevel(const ProcessID procID);
+
+// class ProcessCtl 
+// {
+//     public:
+
+//         // ProcessCtl();
+
+//         void setPriorityLevel(const ProcessID procID, u8 priorityLevel);
+
+//         u8 getPriorityLevel(const ProcessID procID);
+
+// };
+
 /**
  * @}
  */
