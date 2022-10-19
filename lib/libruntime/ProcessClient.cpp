@@ -68,11 +68,8 @@ ProcessClient::Result ProcessClient::processInfo(const ProcessID pid,
     // Fill output
     info.command = cmd;
     info.textState = (pid == m_pid ? "Running" : textStates[info.kernelState.state]);
-<<<<<<< Updated upstream
     info.priorityLevel = getPriorityLevel(pid);
-=======
     info.priorityLevel = info.kernelState.priority;
->>>>>>> Stashed changes
 #endif /* __HOST__ */
 
     return Success;
