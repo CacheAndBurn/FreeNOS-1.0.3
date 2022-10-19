@@ -55,7 +55,7 @@ Renice::Result Renice::exec()
         if (result == ProcessClient::Success)
         {   
             if (pid == PID) {
-                process.changePriorityLevel(pid, priority);
+                process.changePriorityLevel(pid, info, priority);
             }
         }
     }

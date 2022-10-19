@@ -124,7 +124,14 @@ class ProcessClient
      */
     ProcessID findProcess(const String program) const;
 
-    void changePriorityLevel(ProcessID pid, u8 priority);
+    /**
+     * Changes the priority level of a process.
+     *
+     * @param pid Process identifier of the process
+     * @param info Process information output
+     * @param priority New priority level of the process
+     */
+    void changePriorityLevel(const ProcessID pid, ProcessClient::Info &info, u8 priority);
 
   private:
 

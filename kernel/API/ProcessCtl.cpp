@@ -138,6 +138,11 @@ API::Result ProcessCtlHandler(const ProcessID procID,
         info->priority = proc->getPriorityLevel();
         break;
 
+    case ChangePriority:
+        if (info->priority != 3)
+            proc->setPriorityLevel(info->priority);
+        break;
+
     case WaitPID:
         if (procs->wait(proc) != ProcessManager::Success)
         {
@@ -178,6 +183,7 @@ API::Result ProcessCtlHandler(const ProcessID procID,
         if (procs->sleep((const Timer::Info *)addr) == ProcessManager::Success)
             procs->schedule();
         break;
+
     }
 
     return API::Success;
