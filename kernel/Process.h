@@ -263,6 +263,8 @@ class Process
     /** Wait exit result of the other Process. */
     uint m_waitResult;
 
+    u8 m_priorityLevel;
+
     /** Privilege level */
     bool m_privileged;
 
