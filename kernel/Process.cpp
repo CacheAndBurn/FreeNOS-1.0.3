@@ -23,7 +23,7 @@
 #include "Process.h"
 #include "ProcessEvent.h"
 
-Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map, u8 priority)
+Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map)
     : m_id(id), m_map(map), m_shares(id)
 {
     m_state         = Stopped;
@@ -36,7 +36,6 @@ Process::Process(ProcessID id, Address entry, bool privileged, const MemoryMap &
     m_privileged    = privileged;
     m_memoryContext = ZERO;
     m_kernelChannel = ZERO;
-    m_priorityLevel = priority;
     MemoryBlock::set(&m_sleepTimer, 0, sizeof(m_sleepTimer));
 }
 
@@ -74,11 +73,6 @@ ProcessID Process::getWait() const
     return m_waitId;
 }
 
-u8 Process::getPriorityLevel() const
-{
-    return m_priorityLevel;
-}
-
 uint Process::getWaitResult() const
 {
     return m_waitResult;
@@ -102,11 +96,6 @@ const Timer::Info & Process::getSleepTimer() const
 MemoryContext * Process::getMemoryContext()
 {
     return m_memoryContext;
-}
-
-void Process::setPriorityLevel(u8 priority)
-{
-    m_priorityLevel = priority;
 }
 
 bool Process::isPrivileged() const

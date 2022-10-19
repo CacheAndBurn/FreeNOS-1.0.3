@@ -82,7 +82,7 @@ class Process
      * @param map Memory map to use
      * @param priority Priority level of the process.
      */
-    Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map, u8 priority);
+    Process(ProcessID id, Address entry, bool privileged, const MemoryMap &map);
 
     /**
      * Destructor function.
@@ -262,8 +262,6 @@ class Process
 
     /** Wait exit result of the other Process. */
     uint m_waitResult;
-
-    u8 m_priorityLevel;
 
     /** Privilege level */
     bool m_privileged;

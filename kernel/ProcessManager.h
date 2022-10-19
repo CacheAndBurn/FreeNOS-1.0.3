@@ -82,8 +82,7 @@ class ProcessManager
     Process * create(const Address entry,
                      const MemoryMap &map,
                      const bool readyToRun = false,
-                     const bool privileged = false,
-                     u8 priorityLevel = 3);
+                     const bool privileged = false);
 
     /**
      * Retrieve a Process by it's ID.
