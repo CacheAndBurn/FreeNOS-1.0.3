@@ -59,12 +59,30 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
         return InvalidArgument;
     }
 
-//    Size count = m_queue.count();
-//
-//    // Traverse the Queue to remove the Process
     for (Size i = 0; i < m_queue_p5.count(); i++)
     {
         Process *p = m_queue_p5.pop();
+
+        if (p->getPriorityLevel() == 4)
+        {
+            m_queue_p4.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 3)
+        {
+            m_queue_p3.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 2)
+        {
+            m_queue_p2.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 1)
+        {
+            m_queue_p1.push(p);
+            continue;
+        }
 
         if (p == proc)
             return Success;
@@ -75,6 +93,27 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
     {
         Process *p = m_queue_p4.pop();
 
+        if (p->getPriorityLevel() == 5)
+        {
+            m_queue_p5.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 3)
+        {
+            m_queue_p3.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 2)
+        {
+            m_queue_p2.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 1)
+        {
+            m_queue_p1.push(p);
+            continue;
+        }
+
         if (p == proc)
             return Success;
         else
@@ -83,6 +122,27 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
     for (Size i = 0; i < m_queue_p3.count(); i++)
     {
         Process *p = m_queue_p3.pop();
+
+        if (p->getPriorityLevel() == 5)
+        {
+            m_queue_p5.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 4)
+        {
+            m_queue_p4.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 2)
+        {
+            m_queue_p2.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 1)
+        {
+            m_queue_p1.push(p);
+            continue;
+        }
 
         if (p == proc)
             return Success;
@@ -93,6 +153,27 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
     {
         Process *p = m_queue_p2.pop();
 
+        if (p->getPriorityLevel() == 5)
+        {
+            m_queue_p5.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 4)
+        {
+            m_queue_p4.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 3)
+        {
+            m_queue_p3.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 1)
+        {
+            m_queue_p1.push(p);
+            continue;
+        }
+
         if (p == proc)
             return Success;
         else
@@ -101,6 +182,27 @@ Scheduler::Result Scheduler::dequeue(Process *proc, bool ignoreState)
     for (Size i = 0; i < m_queue_p1.count(); i++)
     {
         Process *p = m_queue_p1.pop();
+
+        if (p->getPriorityLevel() == 5)
+        {
+            m_queue_p5.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 4)
+        {
+            m_queue_p4.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 3)
+        {
+            m_queue_p3.push(p);
+            continue;
+        }
+        else if (p->getPriorityLevel() == 2)
+        {
+            m_queue_p2.push(p);
+            continue;
+        }
 
         if (p == proc)
             return Success;
