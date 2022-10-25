@@ -696,3 +696,7 @@ People who contributed to FreeNOS are:
 * Coen Bijlsma (libparse, srv/time)
 * Ed Schouten (libteken)
 * Alexander Schrijver (OpenBSD patches)
+
+Branch Renice is the code changes for Project 3: Prioritize it
+FreeNOS-1.0.3/kernel - implemented dequeue function
+FreeNOS-1.0.3/lib/libruntime/ - implemented changes to the priority level
